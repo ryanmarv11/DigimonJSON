@@ -1,19 +1,12 @@
 """
-Things the loop needs to do
-Add a new digimon
-Edit a digimon by list index
-Delete an entry 
-Update the card numbers for entries after deletion
-Get global number
-Edit global number
-Print all entries
-Print x entries
-Add all
-Quit
+To-Do
+After being read, be able to edit each entry
+Add new attribute (will be for the null attribute)
 
 """
 
 import json
+
 
 digimonCounter = 1
 
@@ -114,6 +107,20 @@ def clearScreen():
 		print()
 
 
+def readJSON():
+	fileName = input(" set name: ")
+	fileName = "/mnt/c/Users/ryanm/Documents/Coding/DigimonJSON/" + fileName + ".json"
+	verifyFile = open(fileName)
+	a = verifyFile.read()
+	b = json.loads(a)
+	dList = DigimonList()
+	for item in b.values():
+		for data in item:
+			dList.digimonList.append(Digimon(data["name"], data["rarity"]))
+
+	for item in dList.digimonList:
+		print(item.toString())
+
 def main():
 	dList = DigimonList()
 	while True:
@@ -124,6 +131,7 @@ def main():
 		print("3: Insert Digimon")
 		print("4: Edit Digimon")
 		print("q: Quit")
+		print("r: Read")
 
 		command = input()
 		if command == '0':
@@ -146,6 +154,8 @@ def main():
 				dList.digimonList[index].digimonEditMenu()
 		elif command == 'q':
 			break
+		elif command == 'r':
+			readJSON()
 
 	return dList 
 
@@ -158,6 +168,7 @@ def digimonListToJSONString(dList):
 
 toJson = main()
 jsonString = digimonListToJSONString(toJson)
+"""
 fileName = input("Input set name: ")
 fileName = "/mnt/c/Users/ryanm/Documents/Coding/DigimonJSON/" + fileName + ".json"
 print(fileName)
@@ -168,3 +179,4 @@ except FileNotFoundError:
 	
 f = open(fileName, "a")
 f.write(jsonString)
+"""
